@@ -14,6 +14,8 @@ import java.util.List;
 @RequestMapping("/readingList")
 public class ReadingListController {
 
+    private final AmazonProperties amazonProperties;
+
     private final ReadingListRepository readingListRepository;
 
     @RequestMapping(value = "/{reader}", method = RequestMethod.GET)
@@ -21,6 +23,7 @@ public class ReadingListController {
         List<Book> readingList = readingListRepository.findByReader(reader);
 
         model.addAttribute("books", readingList);
+        model.addAttribute("amazonId", amazonProperties.getAssociateId());
 
         return "readingList";
     }
