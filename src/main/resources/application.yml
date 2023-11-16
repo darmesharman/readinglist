@@ -1,2 +1,5 @@
+server:
+  port: 8000
+
 amazon:
   associate-id: habuma-20
