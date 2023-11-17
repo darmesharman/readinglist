@@ -17,6 +17,7 @@ repositories {
 
 ext {
 	lombokVersion = '1.18.30'
+	mysqlConnectorVersion = '8.0.33'
 }
 
 dependencies {
@@ -24,6 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation "org.springframework.boot:spring-boot-starter-security"
+	implementation "mysql:mysql-connector-java:$mysqlConnectorVersion"
 
 	compileOnly "org.projectlombok:lombok:$lombokVersion"
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
