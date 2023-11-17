@@ -29,7 +29,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("style.css").permitAll()
-                        .requestMatchers("readingList/**").authenticated())
+                        .requestMatchers("readingList/**").authenticated()
+                        .anyRequest().permitAll())
                 .formLogin(form -> form
                         .defaultSuccessUrl("/readingList/user"));
         return http.build();
