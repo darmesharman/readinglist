@@ -30,11 +30,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("style.css").permitAll()
-                        .requestMatchers("readingList/**").authenticated()
-                        .anyRequest().permitAll())
+                        .anyRequest().authenticated())
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/readingList/user"));
+                        .defaultSuccessUrl("/readingList"));
         return http.build();
     }
 

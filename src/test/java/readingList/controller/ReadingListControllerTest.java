@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -36,8 +37,9 @@ class ReadingListControllerTest {
     }
 
     @Test
+    @WithUserDetails
     public void homePage() throws Exception {
-        mockMvc.perform(get("/readingList/user").with(csrf()))
+        mockMvc.perform(get("/readingList").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("readingList"))
                 .andExpect(model().attributeExists("books"))
@@ -45,15 +47,16 @@ class ReadingListControllerTest {
     }
 
     @Test
+    @WithUserDetails
     public void postBook() throws Exception {
-        mockMvc.perform(post("/readingList/user").with(csrf())
+        mockMvc.perform(post("/readingList").with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("title", "Book Title")
                         .param("author", "Book Author")
                         .param("isbn", "1234567890")
                         .param("description", "Description"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/readingList/user"));
+                .andExpect(redirectedUrl("/readingList"));
 
         Book expectedBook = new Book();
         expectedBook.setId(1L);
@@ -63,7 +66,7 @@ class ReadingListControllerTest {
         expectedBook.setIsbn("1234567890");
         expectedBook.setDescription("Description");
 
-        mockMvc.perform(get("/readingList/user").with(csrf()))
+        mockMvc.perform(get("/readingList").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("readingList"))
                 .andExpect(model().attributeExists("books"))

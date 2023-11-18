@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import readingList.config.properties.AmazonProperties;
 import readingList.entity.Book;
 import readingList.repository.ReadingListRepository;
+import readingList.util.UserUtil;
 
 import java.util.List;
 
@@ -22,9 +22,11 @@ public class ReadingListController {
 
     private final ReadingListRepository readingListRepository;
 
-    @GetMapping(value = "/{reader}")
-    public String readersBooks(@PathVariable("reader") String reader, Model model) {
-        List<Book> readingList = readingListRepository.findByReader(reader);
+    private final UserUtil userUtil;
+
+    @GetMapping
+    public String readersBooks(Model model) {
+        List<Book> readingList = readingListRepository.findByReader(userUtil.getCurrentUser().getUsername());
 
         model.addAttribute("books", readingList);
         model.addAttribute("amazonId", amazonProperties.getAssociateId());
@@ -32,12 +34,12 @@ public class ReadingListController {
         return "readingList";
     }
 
-    @PostMapping(value = "/{reader}")
-    public String addToReadingList(@PathVariable("reader") String reader, Book book) {
-        book.setReader(reader);
+    @PostMapping
+    public String addToReadingList(Book book) {
+        book.setReader(userUtil.getCurrentUser().getUsername());
         readingListRepository.save(book);
 
-        return "redirect:/readingList/{reader}";
+        return "redirect:/readingList";
     }
 
 }
