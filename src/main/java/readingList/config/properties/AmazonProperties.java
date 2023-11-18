@@ -1,4 +1,4 @@
-package readingList;
+package readingList.config.properties;
 
 import lombok.Getter;
 import lombok.Setter;

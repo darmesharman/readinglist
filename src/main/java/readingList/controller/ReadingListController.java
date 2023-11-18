@@ -1,4 +1,4 @@
-package readingList;
+package readingList.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import readingList.config.properties.AmazonProperties;
+import readingList.entity.Book;
+import readingList.repository.ReadingListRepository;
 
 import java.util.List;
 

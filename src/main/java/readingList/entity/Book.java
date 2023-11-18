@@ -1,4 +1,4 @@
-package readingList;
+package readingList.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

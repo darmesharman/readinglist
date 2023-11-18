@@ -1,4 +1,4 @@
-package readingList;
+package readingList.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import readingList.entity.Reader;
+import readingList.repository.ReaderRepository;
 
 @Configuration
 @EnableWebSecurity
