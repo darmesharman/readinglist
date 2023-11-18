@@ -5,21 +5,21 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import readingList.entity.Reader;
+import readingList.entity.User;
 
 import java.util.Objects;
 
 @Service
 public class UserUtil {
 
-    public Reader getCurrentUser() throws AuthenticationException {
+    public User getCurrentUser() throws AuthenticationException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (Objects.isNull(authentication) || !(authentication.getPrincipal() instanceof Reader)) {
+        if (Objects.isNull(authentication) || !(authentication.getPrincipal() instanceof User)) {
             throw new UsernameNotFoundException("No authenticated user");
         }
 
-        return (Reader) authentication.getPrincipal();
+        return (User) authentication.getPrincipal();
     }
 
 }

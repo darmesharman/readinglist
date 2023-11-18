@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import readingList.entity.Book;
+import readingList.entity.User;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -49,7 +50,8 @@ class ReadingListControllerTest {
     @Test
     @WithUserDetails
     public void postBook() throws Exception {
-        mockMvc.perform(post("/readingList").with(csrf())
+        mockMvc.perform(post("/readingList")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("title", "Book Title")
                         .param("author", "Book Author")
@@ -58,9 +60,12 @@ class ReadingListControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/readingList"));
 
+        User user = new User();
+        user.setUsername("user");
+
         Book expectedBook = new Book();
         expectedBook.setId(1L);
-        expectedBook.setReader("user");
+        expectedBook.setUser(user);
         expectedBook.setTitle("Book Title");
         expectedBook.setAuthor("Book Author");
         expectedBook.setIsbn("1234567890");

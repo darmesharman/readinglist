@@ -26,7 +26,7 @@ public class ReadingListController {
 
     @GetMapping
     public String readersBooks(Model model) {
-        List<Book> readingList = readingListRepository.findByReader(userUtil.getCurrentUser().getUsername())
+        List<Book> readingList = readingListRepository.findByUser(userUtil.getCurrentUser())
                 .orElse(null);
 
         model.addAttribute("books", readingList);
@@ -37,7 +37,7 @@ public class ReadingListController {
 
     @PostMapping
     public String addToReadingList(Book book) {
-        book.setReader(userUtil.getCurrentUser().getUsername());
+        book.setUser(userUtil.getCurrentUser());
         readingListRepository.save(book);
 
         return "redirect:/readingList";

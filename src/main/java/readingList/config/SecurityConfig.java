@@ -1,6 +1,5 @@
 package readingList.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,18 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import readingList.entity.Reader;
-import readingList.repository.ReaderRepository;
+import readingList.entity.User;
+import readingList.repository.UserRepository;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final ReaderRepository readerRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public SecurityConfig(ReaderRepository readerRepository) {
-        this.readerRepository = readerRepository;
+    public SecurityConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Bean
@@ -53,12 +51,12 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        Reader reader = new Reader();
-        reader.setUsername("user");
-        reader.setFullName("John Doe");
-        reader.setPassword("{noop}password");
-        readerRepository.save(reader);
+        User user = new User();
+        user.setUsername("user");
+        user.setFullName("John Doe");
+        user.setPassword("{noop}password");
+        userRepository.save(user);
 
-        return username -> readerRepository.findById(username).orElseThrow();
+        return username -> userRepository.findById(username).orElseThrow();
     }
 }

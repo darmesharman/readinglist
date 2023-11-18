@@ -2,6 +2,8 @@ package readingList.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,7 +16,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Reader implements UserDetails {
+@EqualsAndHashCode(of = "username")
+public class User implements UserDetails {
 
     @Id
     private String username;
@@ -23,9 +26,12 @@ public class Reader implements UserDetails {
 
     private String password;
 
+    @OneToMany(mappedBy = "user")
+    private List<Book> books;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("READER"));
+        return List.of(new SimpleGrantedAuthority("USER"));
     }
 
     @Override
