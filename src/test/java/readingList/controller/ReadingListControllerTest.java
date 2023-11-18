@@ -77,7 +77,7 @@ class ReadingListControllerTest {
                 .andExpect(model().attributeExists("books"))
                 .andExpect(model().attribute("books", hasSize(1)))
                 .andExpect(model().attribute("books",
-                        contains(samePropertyValuesAs(expectedBook))));
+                        contains(samePropertyValuesAs(expectedBook, "createdAt", "updatedAt"))));
     }
 
 }
