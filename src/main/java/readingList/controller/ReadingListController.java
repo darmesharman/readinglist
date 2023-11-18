@@ -6,39 +6,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import readingList.config.properties.AmazonProperties;
 import readingList.entity.Book;
-import readingList.repository.ReadingListRepository;
-import readingList.util.UserUtil;
-
-import java.util.List;
+import readingList.service.ReadingListService;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/readingList")
 public class ReadingListController {
 
-    private final AmazonProperties amazonProperties;
-
-    private final ReadingListRepository readingListRepository;
-
-    private final UserUtil userUtil;
+    private final ReadingListService readingListService;
 
     @GetMapping
     public String readersBooks(Model model) {
-        List<Book> readingList = readingListRepository.findByUser(userUtil.getCurrentUser())
-                .orElse(null);
-
-        model.addAttribute("books", readingList);
-        model.addAttribute("amazonId", amazonProperties.getAssociateId());
+        readingListService.populateModelWithReadingList(model);
 
         return "readingList";
     }
 
     @PostMapping
     public String addToReadingList(Book book) {
-        book.setUser(userUtil.getCurrentUser());
-        readingListRepository.save(book);
+        readingListService.saveBook(book);
 
         return "redirect:/readingList";
     }
