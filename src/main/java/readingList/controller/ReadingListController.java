@@ -26,7 +26,8 @@ public class ReadingListController {
 
     @GetMapping
     public String readersBooks(Model model) {
-        List<Book> readingList = readingListRepository.findByReader(userUtil.getCurrentUser().getUsername());
+        List<Book> readingList = readingListRepository.findByReader(userUtil.getCurrentUser().getUsername())
+                .orElse(null);
 
         model.addAttribute("books", readingList);
         model.addAttribute("amazonId", amazonProperties.getAssociateId());
