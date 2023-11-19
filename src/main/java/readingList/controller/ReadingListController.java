@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import readingList.entity.Book;
+import readingList.dto.BookDTO;
 import readingList.service.ReadingListService;
 
 @Controller
@@ -24,8 +24,8 @@ public class ReadingListController {
     }
 
     @PostMapping
-    public String addToReadingList(Book book) {
-        readingListService.saveBook(book);
+    public String addToReadingList(BookDTO bookDTO) {
+        readingListService.saveBook(bookDTO);
 
         return "redirect:/readingList";
     }

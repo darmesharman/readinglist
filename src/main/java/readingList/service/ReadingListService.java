@@ -1,16 +1,16 @@
 package readingList.service;
 
 import org.springframework.ui.Model;
-import readingList.entity.Book;
+import readingList.dto.BookDTO;
 
 import java.util.List;
 
 public interface ReadingListService {
 
-    List<Book> getReadingListForCurrentUser();
+    List<BookDTO> getReadingListForCurrentUser();
 
     void populateModelWithReadingList(Model model);
 
-    void saveBook(Book book);
+    void saveBook(BookDTO book);
 
 }

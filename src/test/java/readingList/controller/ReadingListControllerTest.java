@@ -11,8 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import readingList.entity.Book;
-import readingList.entity.User;
+import readingList.dto.BookDTO;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -60,16 +59,12 @@ class ReadingListControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/readingList"));
 
-        User user = new User();
-        user.setUsername("user");
-
-        Book expectedBook = new Book();
-        expectedBook.setId(1L);
-        expectedBook.setUser(user);
-        expectedBook.setTitle("Book Title");
-        expectedBook.setAuthor("Book Author");
-        expectedBook.setIsbn("1234567890");
-        expectedBook.setDescription("Description");
+        BookDTO expectedBook = new BookDTO(
+                "Book Title",
+                "Book Author",
+                "1234567890",
+                "Description"
+        );
 
         mockMvc.perform(get("/readingList").with(csrf()))
                 .andExpect(status().isOk())
@@ -77,7 +72,7 @@ class ReadingListControllerTest {
                 .andExpect(model().attributeExists("books"))
                 .andExpect(model().attribute("books", hasSize(1)))
                 .andExpect(model().attribute("books",
-                        contains(samePropertyValuesAs(expectedBook, "createdAt", "updatedAt"))));
+                        contains(samePropertyValuesAs(expectedBook))));
     }
 
 }
