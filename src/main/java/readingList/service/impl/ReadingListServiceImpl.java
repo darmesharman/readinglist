@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import readingList.config.properties.AmazonProperties;
 import readingList.entity.Book;
-import readingList.repository.ReadingListRepository;
+import readingList.repository.BookRepository;
 import readingList.service.ReadingListService;
 import readingList.util.UserUtil;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReadingListServiceImpl implements ReadingListService {
 
-    private final ReadingListRepository readingListRepository;
+    private final BookRepository bookRepository;
 
     private final AmazonProperties amazonProperties;
 
@@ -24,7 +24,7 @@ public class ReadingListServiceImpl implements ReadingListService {
 
     @Override
     public List<Book> getReadingListForCurrentUser() {
-        return readingListRepository.findByUser(userUtil.getCurrentUser())
+        return bookRepository.findByUser(userUtil.getCurrentUser())
                 .orElse(Collections.emptyList());
     }
 
@@ -40,7 +40,7 @@ public class ReadingListServiceImpl implements ReadingListService {
     public void saveBook(Book book) {
         book.setUser(userUtil.getCurrentUser());
 
-        readingListRepository.save(book);
+        bookRepository.save(book);
     }
 
 }
