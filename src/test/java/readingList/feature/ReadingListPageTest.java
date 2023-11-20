@@ -1,4 +1,4 @@
-package readingList.controller;
+package readingList.feature;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class ReadingListControllerTest {
+class ReadingListTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
